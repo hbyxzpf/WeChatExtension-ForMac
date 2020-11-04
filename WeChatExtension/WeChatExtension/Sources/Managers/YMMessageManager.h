@@ -17,6 +17,6 @@
 - (NSString *)getMessageContentWithData:(MessageData *)msgData;
 - (NSArray *)getMsgListWithChatName:(id)arg1 minMesLocalId:(unsigned int)arg2 limitCnt:(NSInteger)arg3;
 - (void)playVoiceWithMessageData:(MessageData *)msgData;
-
+- (void)sendImageMessageForUrl:(id)imageUrl toUsrName:(id)toUser;
 - (void)asyncRevokeMessage:(MessageData *)revokeMsgData;
 @end

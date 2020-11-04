@@ -230,6 +230,21 @@
         });
     }
 }
+- (void)sendImageMessageForUrl:(id)imageUrl toUsrName:(id)toUser{
+    NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
+    NSImage *image = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+    NSData *originalData = [image TIFFRepresentation];
+    NSData *thumData = [self getCompressImageDataWithImg:image rate:0.8];
+    SendImageInfo *info = [[objc_getClass("SendImageInfo") alloc] init];
+    info.m_uiThumbWidth = 120;
+    info.m_uiThumbHeight = 67;
+    info.m_uiOriginalWidth  = 1920;
+    info.m_uiOriginalHeight = 1080;
+    __weak __typeof (self) wself = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [wself.service SendImgMessage:currentUserName toUsrName:toUser thumbImgData:thumData midImgData:thumData imgData:originalData imgInfo:info];
+    });
+}
 
 - (MessageService *)service
 {
