@@ -205,7 +205,6 @@
                  [allDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSDictionary * _Nonnull obj, BOOL * _Nonnull stop) {
                      if (![memListArray containsObject:key]) {
                          NSString *nick = [YMIMContactsManager getGroupMemberNickName:key];
-                         
                          if (nick) {
                              if ([wself queryQuitMsgFromPool:key group:groupData.m_nsUsrName]) {
                                  NSString *message = nil;
@@ -214,7 +213,6 @@
                                  } else {
                                      message = [NSString stringWithFormat:@"⚠️Group-Quitting Monitor⚠️\n@%@ has quit group chat",nick];
                                  }
-                                 
                                  [YMMessageHelper addLocalWarningMsg:message fromUsr:groupData.m_nsUsrName];
                                  [self addQuitMsgToPool:key group:groupData.m_nsUsrName];
                              }

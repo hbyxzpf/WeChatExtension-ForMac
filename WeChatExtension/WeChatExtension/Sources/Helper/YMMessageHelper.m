@@ -96,18 +96,18 @@
             }
             
             //显示p路径和分享参数 有需要再开启
-//            NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@%@ (%@) \n%@%@ \n%@%@ \n%@%@ \n",
-//                                       YMLocalizedString(@"assistant.msgInfo.miniprogram"),
-//                                       YMLocalizedString(@"assistant.msgInfo.miniprogram.name"),
-//                                       sourcedisplayname,
-//                                       appid,
-//                                       YMLocalizedString(@"assistant.msgInfo.miniprogram.title"),
-//                                       title,
-//                                       YMLocalizedString(@"assistant.msgInfo.miniprogram.path"),
-//                                       pagepath,
-//                                       YMLocalizedString(@"assistant.msgInfo.miniprogram.share"),
-//                                       shareId
-//                                       ];
+            NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@%@ (%@) \n%@%@ \n%@%@ \n%@%@ \n",
+                                       YMLocalizedString(@"assistant.msgInfo.miniprogram"),
+                                       YMLocalizedString(@"assistant.msgInfo.miniprogram.name"),
+                                       sourcedisplayname,
+                                       appid,
+                                       YMLocalizedString(@"assistant.msgInfo.miniprogram.title"),
+                                       title,
+                                       YMLocalizedString(@"assistant.msgInfo.miniprogram.path"),
+                                       pagepath,
+                                       YMLocalizedString(@"assistant.msgInfo.miniprogram.share"),
+                                       shareId
+                                       ];
             NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@%@ \n%@%@ \n",
                                         YMLocalizedString(@"assistant.msgInfo.miniprogram"),
                                         YMLocalizedString(@"assistant.msgInfo.miniprogram.name"),
