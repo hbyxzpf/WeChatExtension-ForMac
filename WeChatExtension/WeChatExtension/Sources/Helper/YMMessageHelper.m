@@ -108,13 +108,13 @@
                                        YMLocalizedString(@"assistant.msgInfo.miniprogram.share"),
                                        shareId
                                        ];
-            NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@%@ \n%@%@ \n",
-                                        YMLocalizedString(@"assistant.msgInfo.miniprogram"),
-                                        YMLocalizedString(@"assistant.msgInfo.miniprogram.name"),
-                                        sourcedisplayname,
-                                        YMLocalizedString(@"assistant.msgInfo.miniprogram.title"),
-                                        title
-                                        ];
+//            NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@%@ \n%@%@ \n",
+//                                        YMLocalizedString(@"assistant.msgInfo.miniprogram"),
+//                                        YMLocalizedString(@"assistant.msgInfo.miniprogram.name"),
+//                                        sourcedisplayname,
+//                                        YMLocalizedString(@"assistant.msgInfo.miniprogram.title"),
+//                                        title
+//                                        ];
             MessageData *newMsgData = ({
                 MessageData *msg = [[objc_getClass("MessageData") alloc] initWithMsgType:0x2710];
                 [msg setFromUsrName:session];

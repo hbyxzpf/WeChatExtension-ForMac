@@ -3,7 +3,7 @@
 <img src="https://gitee.com/MustangYM/we-chat-extension-source/raw/master/Pictures/face1.png" width="1000px"/>
 </p>
 
-![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v2.7.0-brightgreen.svg)](https://github.com/MustangYM/WeChatExtension-ForMac/releases)  ![support](https://img.shields.io/badge/support-wechat%202.4.2-blue.svg)
+![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v2.8.0-brightgreen.svg)](https://github.com/MustangYM/WeChatExtension-ForMac/releases)  ![support](https://img.shields.io/badge/support-wechat%202.6.0-blue.svg)
 
 - 支持[企业微信](https://github.com/MustangYM/WeChatICU-ForMac)，由此进。
 - 如果你希望更简约，这里提供了[简版小助手](https://github.com/MustangYM/WeChatSeptet-ForMac)，安装方式与WeChatExtension的手动安装方式一样。
@@ -101,6 +101,7 @@
 </p>
 
 ## 怎么安装?
+
 ### 安装方式一：普通安装(clone最新版本并安装)
 ```
 sudo rm -r -f WeChatExtension-ForMac && git clone --depth=1 https://github.com/MustangYM/WeChatExtension-ForMac && cd WeChatExtension-ForMac/WeChatExtension/Rely && ./Install.sh
@@ -131,24 +132,28 @@ omw -g
 
 安装完成后会自动安装微信插件，可以访问 [Oh My WeChat 的项目主页](https://github.com/lmk123/oh-my-wechat#oh-my-wechat)查看更多用法。
 
+### 安装方式三：下载pkg包一键安装
+- 点击主页右侧`Release`，找到相应版本，点击下载`WeChatExtension.pkg`包，双击打开安装即可（2.8.0小助手开始支持）。
+<p align="center">
+<img src="https://gitee.com/MustangYM/we-chat-extension-source/raw/master/Pictures/pkgInstall.png" width="800px"/>
+</p>
 
-### 安装方式三：手动安装
+### 安装方式四：手动安装
+- 4.1.确保你的Mac上已经安装了微信App。
 
-- 3.1.确保你的Mac上已经安装了微信App。
-
-- 3.2.下载本项目到你的电脑里， 并双击打开。
+- 4.2.下载本项目到你的电脑里， 并双击打开。
 <p align="center">
 <img src="https://gitee.com/MustangYM/we-chat-extension-source/raw/master/Pictures/install1.png" width="1500px"/>
 </p>
 
-- 3.3.依次打开文件夹`WeChatExtension/Rely/Install.sh`。
+- 4.3.依次打开文件夹`WeChatExtension/Rely/Install.sh`。
 
-- 3.4.将`Install.sh`拖入终端工具中按`回车`执行安装。
+- 4.4.将`Install.sh`拖入终端工具中按`回车`执行安装。
 <p align="center">
 <img src="https://gitee.com/MustangYM/we-chat-extension-source/raw/master/Pictures/install2.png" width="1500px"/>
 </p>
 
-- 3.5.`重启`微信，安装完成。
+- 4.5.`重启`微信，安装完成。
 
 ## 怎么卸载?
 ### 卸载方式一：自动卸载（推荐）
@@ -165,7 +170,8 @@ bash <(curl -sL https://git.io/JUO6r)
 
 ## 更新日志
 ```
-2020-10-31  修复清除空会话失效，优化置底、公众号浏览，新增一键卸载小助手，新增关闭皮肤选项，新增群员监控、拒收群消息。
+2020-12-24 适配微信2.6.0（16787），新增pkg安装包安装模式。
+2020-10-31 修复清除空会话失效，优化置底、公众号浏览，新增一键卸载小助手，新增关闭皮肤选项，新增群员监控、拒收群消息。
 2020-09-20 系统低于macOS10.14不再支持皮肤，修复2.4.2 (15650)选取联系人Crash，优化UI细节。
 2020-09-16 适配微信2.4.2(15650)Beta 148，修复微信会话列表为空，新增通讯录管理皮肤适配，小程序成为独立模块，多开与小程序终于完美兼容，喜极而泣！
 2020-08-28 重构退群监控，会话列表选中高亮，修复部分低版本微信Crash。
@@ -486,7 +492,8 @@ This project exists thanks to all the people who contribute。
 <a href="https://opencollective.com/mustangym666#backers" target="_blank"><img src="https://opencollective.com/mustangym666/backers.svg?width=890"></a>
 
 ## 交流
-- QQ群：`741941325`。
+- QQ①群：`741941325`。
+- QQ②群：`905526964`。
 - 皮肤的颜色搭配采纳了大量群友的反馈和建议，经过激烈的讨论甚至投票仍然不能统一意见，那就干脆做`两套`吧，所以才会出现`黑夜`和`深邃`两款如此相近的`暗色调主题`，所以颜色上不再接受pr，向朋友们表示`感谢`。
 - 封面图的`骷髅`与`乌鸦`元素来自于`史泰龙`的电影`《The Expendables》`（敢死队）海报。
 - 插件中的`图标`、本页所有`Logo`、预览图均出自本人`蹩脚`的[Photoshop](https://www.adobe.com/products/photoshop.html)设计。
